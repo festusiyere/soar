@@ -68,7 +68,6 @@ const Dashboard = () => {
 
   const handleModal = () => {
     setModal(!modal);
-    console.log(maintenance);
   };
 
   return (
@@ -119,11 +118,11 @@ const Dashboard = () => {
                 </tr>
               </thead>
               <tbody>
-                {maintenance.map((item) => (
-                  <Table key={item.equipmentId} item={item} />
+                {maintenance.map((item, index) => (
+                  <Table key={index} item={item} />
                 ))}
               </tbody>
-            </table>{" "}
+            </table>
           </div>
         </Container>
       )}

@@ -3,12 +3,21 @@ import styled from "styled-components";
 import Button from "./Button";
 import { FaRegTimesCircle } from "react-icons/fa";
 import Dropdown from "./Dropdown";
-import { Location, Equipment, equipmentType, Status } from "../../Data";
+import {
+  Location,
+  Equipment,
+  equipmentType,
+  Status,
+  systemTypes,
+  Sbu,
+} from "../../Data";
 
 const locationOptions = Location.map((item) => item.name);
-const equipmentTypeOptions = Equipment.map((item) => item.equipment);
+const equipmentTypeOptions = Equipment.map((item) => item.transactionId);
 const equipmentOptions = equipmentType.map((item) => item.name);
+const systemTypeOptions = systemTypes.map((item) => item.name);
 const statusOptions = Status.map((item) => item.name);
+const sbuOptions = Sbu.map((item) => item.name);
 
 const Container = styled.div`
   width: 400px;
@@ -74,6 +83,8 @@ const InputModal = ({ handleModal, maintenance, setMaintenance }) => {
   const [equipment, setEquipment] = useState("");
   const [equipmentType, setEquipmentType] = useState("");
   const [status, setStatus] = useState("");
+  const [sbu, setSbu] = useState("");
+
   const [date, setDate] = useState("");
 
   const [active, setActive] = useState(1);
@@ -89,7 +100,7 @@ const InputModal = ({ handleModal, maintenance, setMaintenance }) => {
       const newMaintenanceData = {
         location: location,
         equipmentId: equipmentType,
-        SBU: equipmentType,
+        SBU: sbu,
         date,
         equipment,
         status,
@@ -160,6 +171,13 @@ const InputModal = ({ handleModal, maintenance, setMaintenance }) => {
               value={status}
               setOnchange={setStatus}
             />
+            <Dropdown
+              placeholder="SBU"
+              label="SBU"
+              options={sbuOptions}
+              value={sbu}
+              setOnchange={setSbu}
+            />
             <input
               type="date"
               value={date}
@@ -171,24 +189,36 @@ const InputModal = ({ handleModal, maintenance, setMaintenance }) => {
             <Dropdown
               placeholder="System Type"
               label="System Type"
-              options={locationOptions}
+              options={systemTypeOptions}
+              // value={systemtype}
+              // setOnchange={setSystemtype}
             />
             <Dropdown
               placeholder="Equipment"
               label="Equipment"
               options={equipmentOptions}
+              value={equipment}
+              setOnchange={setEquipment}
             />
             <Dropdown
               placeholder="Equipment Type"
               label="Equipment Type"
               options={equipmentTypeOptions}
+              value={equipmentType}
+              setOnchange={setEquipmentType}
             />
             <Dropdown
               placeholder="Status"
               label="Select Status"
               options={statusOptions}
+              value={status}
+              setOnchange={setStatus}
             />
-            <input type="date"></input>
+            <input
+              type="date"
+              value={date}
+              onChange={(e) => setDate(e.target.value)}
+            ></input>
           </>
         )}
       </MiddleContainer>

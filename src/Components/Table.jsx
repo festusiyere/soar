@@ -1,4 +1,5 @@
 import React from "react";
+import { StatusButton } from "./Button";
 
 const Table = ({ item, index }) => {
   return (
@@ -8,7 +9,9 @@ const Table = ({ item, index }) => {
       <td>{item.location}</td>
       <td>{item.SBU}</td>
       <td>{item.equipment}</td>
-      <td>{item.status}</td>
+      <td>
+        <StatusButton variant={item.status}>{item.status}</StatusButton>
+      </td>
     </tr>
   );
 };
