@@ -3,6 +3,8 @@ import styled from 'styled-components';
 import Button from './Button';
 import { FiX } from 'react-icons/fi';
 import Dropdown from './Dropdown';
+import dayjs from 'dayjs';
+
 import {
 	Location,
 	Equipment,
@@ -132,11 +134,13 @@ const InputModal = ({ handleModal, maintenance, setMaintenance }) => {
 
 	const handleSubmit = () => {
 		if ((location, equipmentType, date, status, equipment !== '')) {
+			const formattedDate = dayjs(date).format('MMM Do YYYY');
+
 			const newMaintenanceData = {
 				location: location,
 				equipmentId: equipmentType,
 				SBU: sbu,
-				date,
+				date: formattedDate,
 				equipment,
 				status,
 			};

@@ -59,11 +59,23 @@ const TopNumber = styled.h2`
 
 const Dashboard = () => {
 	const [maintenance, setMaintenance] = useState(TableData);
-	const [modal, setModal] = useState(true);
+	const [modal, setModal] = useState(false);
 
 	const handleModal = () => {
 		setModal(!modal);
 	};
+
+	const totalMaintenance = maintenance.filter(
+		(item) => item.status == 'maintenance'
+	).length;
+
+	const totalAvailable = maintenance.filter(
+		(item) => item.status == 'available'
+	).length;
+
+	const totalBreakdown = maintenance.filter(
+		(item) => item.status == 'breakdown'
+	).length;
 
 	return (
 		<>
@@ -84,15 +96,15 @@ const Dashboard = () => {
 					<Top>
 						<Item>
 							<TopText>Total Available Equipment</TopText>
-							<TopNumber> 10 </TopNumber>
+							<TopNumber> {totalAvailable} </TopNumber>
 						</Item>
 						<Item>
 							<TopText>Total Maintenance Equipment</TopText>
-							<TopNumber> 153 </TopNumber>
+							<TopNumber> {totalMaintenance} </TopNumber>
 						</Item>
 						<Item>
 							<TopText>Total Breakdown Equipment</TopText>
-							<TopNumber> 3 </TopNumber>
+							<TopNumber> {totalBreakdown} </TopNumber>
 						</Item>
 					</Top>
 					<div className="table-container">
