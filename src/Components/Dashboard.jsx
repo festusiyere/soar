@@ -1,141 +1,131 @@
-import React, { useState } from "react";
-import { FaAngleLeft, FaSearch } from "react-icons/fa";
-import styled from "styled-components";
-import { TableData } from "../../Data";
-import Button from "./Button";
-import InputModal from "./InputModal";
-import Table from "./Table";
+import React, { useState } from 'react';
+import { FaSearch } from 'react-icons/fa';
+import { FiPlus } from 'react-icons/fi';
+import styled from 'styled-components';
+import { TableData } from '../../Data';
+import Button from './Button';
+import InputModal from './InputModal';
+import TableRow from './TableRow';
 
 const Container = styled.div`
-  max-width: 1500px;
-  width: 100vw;
-  margin: 2rem auto;
-  background-color: #f2f2f2;
-  padding: 3rem 1rem 1rem;
-  position: relative;
+	max-width: 1440px;
+	width: 100%;
+	margin: 0rem auto;
+	padding: 2rem 1rem 1rem;
+	position: relative;
 `;
-const Navigation = styled.div`
-  position: absolute;
-  left: 1rem;
-  top: 0.5rem;
-  font-weight: 500;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+
+const TitleBar = styled.div`
+	width: 100%;
+	position: relative;
+	font-weight: 500;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 2rem;
+
+	h1 {
+		font-family: 'Comfortaa', cursive;
+		font-weight: 600;
+		letter-spacing: -1px;
+	}
 `;
 const Top = styled.div`
-  display: flex;
+	display: flex;
+	justify-content: space-between;
 `;
-const Add = styled.div`
-  flex: 1;
-  height: 5rem;
-  margin: 0.2rem;
-  border-radius: 0.5rem;
-  background-color: lightblue;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-const AddText = styled.div`
-  font-weight: 500;
-`;
+
 const Item = styled.div`
-  flex: 1;
-  margin: 0.2rem;
-  padding: 0.5rem 2rem;
-  border-radius: 0.5rem;
-  background-color: #fff;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: flex-start;
+	flex-basis: 32.5%;
+	padding: 1.7rem 1.5rem;
+	border-radius: 0.5rem;
+	background-color: #fff;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: flex-start;
+	border: 1px solid rgba(22, 22, 22, 0.12);
 `;
 const TopText = styled.p`
-  font-size: 0.8rem;
+	font-size: 0.8rem;
+	color: rgba(14, 14, 14, 0.69);
+	font-weight: 500;
+	margin-bottom: 10px;
 `;
-const TopNumber = styled.h2``;
-const Search = styled.div`
-  position: absolute;
-  right: 2rem;
-  top: 1rem;
-  font-weight: 200;
-  font-size: 0.8rem;
+const TopNumber = styled.h2`
+	font-size: 3rem;
+	font-weight: 400;
 `;
 
 const Dashboard = () => {
-  const [maintenance, setMaintenance] = useState(TableData);
-  const [modal, setModal] = useState(false);
+	const [maintenance, setMaintenance] = useState(TableData);
+	const [modal, setModal] = useState(false);
 
-  const handleModal = () => {
-    setModal(!modal);
-  };
+	const handleModal = () => {
+		setModal(!modal);
+	};
 
-  return (
-    <>
-      {!modal && (
-        <Container>
-          <Navigation>
-            <FaAngleLeft color="gold" /> Maintenance
-          </Navigation>
-          <Top>
-            <Add>
-              <Button
-                variant="solid"
-                shape="round"
-                color="red"
-                onClick={handleModal}
-              >
-                +
-              </Button>
-              <AddText>Maintenance</AddText>
-            </Add>
-            <Item>
-              <TopText>Total Available Equipment</TopText>
-              <TopNumber> 10 </TopNumber>
-            </Item>
-            <Item>
-              <TopText>Total Maintenance Equipment</TopText>
-              <TopNumber> 153 </TopNumber>
-            </Item>
-            <Item>
-              <TopText>Total Breakdown Equipment</TopText>
-              <TopNumber> 3 </TopNumber>
-            </Item>
-          </Top>
-          <div className="table-container">
-            <Search>
-              <FaSearch />
-            </Search>
-            <table>
-              <thead>
-                <tr>
-                  <th>Date</th>
-                  <th>Equipment ID</th>
-                  <th>Location</th>
-                  <th>SBU</th>
-                  <th>Equipment</th>
-                  <th>Status</th>
-                </tr>
-              </thead>
-              <tbody>
-                {maintenance.map((item, index) => (
-                  <Table key={index} item={item} />
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </Container>
-      )}
+	return (
+		<>
+			{!modal && (
+				<Container>
+					<TitleBar>
+						<h1>Maintenance</h1>
+						<Button
+							variant="solid"
+							shape="normal"
+							onClick={handleModal}
+							hasIcon="true"
+							iconPosition="left"
+						>
+							<FiPlus /> Add record
+						</Button>
+					</TitleBar>
+					<Top>
+						<Item>
+							<TopText>Total Available Equipment</TopText>
+							<TopNumber> 10 </TopNumber>
+						</Item>
+						<Item>
+							<TopText>Total Maintenance Equipment</TopText>
+							<TopNumber> 153 </TopNumber>
+						</Item>
+						<Item>
+							<TopText>Total Breakdown Equipment</TopText>
+							<TopNumber> 3 </TopNumber>
+						</Item>
+					</Top>
+					<div className="table-container">
+						<table>
+							<thead>
+								<tr>
+									<th>Date</th>
+									<th>Equipment ID</th>
+									<th>Location</th>
+									<th>SBU</th>
+									<th>Equipment</th>
+									<th>Status</th>
+								</tr>
+							</thead>
+							<tbody>
+								{maintenance.map((item, index) => (
+									<TableRow key={index} item={item} />
+								))}
+							</tbody>
+						</table>
+					</div>
+				</Container>
+			)}
 
-      {modal && (
-        <InputModal
-          handleModal={handleModal}
-          maintenance={maintenance}
-          setMaintenance={setMaintenance}
-        />
-      )}
-    </>
-  );
+			{modal && (
+				<InputModal
+					handleModal={handleModal}
+					maintenance={maintenance}
+					setMaintenance={setMaintenance}
+				/>
+			)}
+		</>
+	);
 };
 
 export default Dashboard;
