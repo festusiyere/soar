@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import Button from './Button';
-import { FaRegTimesCircle } from 'react-icons/fa';
+import { FiX } from 'react-icons/fi';
 import Dropdown from './Dropdown';
 import {
 	Location,
@@ -20,55 +20,90 @@ const statusOptions = Status.map((item) => item.name);
 const sbuOptions = Sbu.map((item) => item.name);
 
 const Container = styled.div`
-	width: 400px;
+	max-width: 550px;
+	width: 100%;
 	box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.1), -3px -3px 10px rgba(0, 0, 0, 0.1);
 	border-radius: 1rem;
 	margin: 1rem auto;
+	padding: 1rem 10px;
 `;
 const TopContainer = styled.div`
 	position: relative;
-	border-bottom: 1px solid #f2f2f2;
-	padding: 1rem;
+	padding: 1rem 1rem 0.5rem;
 `;
+
 const HeaderText = styled.p`
-	font-weight: 500;
+	font-family: 'Comfortaa', cursive;
+	font-weight: 600;
+	letter-spacing: -1px;
 	font-size: 1.5rem;
 `;
-const CloseBtn = styled.div`
+
+const CloseBtn = styled.a`
 	cursor: pointer;
 	position: absolute;
-	display: flex;
-	align-items: center;
-	right: 1rem;
-	top: 0;
-	bottom: 0;
-	margin: auto;
-	font-weight: bold;
+	right: 1.1rem;
+	top: 1.1rem;
+	z-index: 2;
+
+	svg {
+		stroke-width: 2px;
+		stroke: rgba(102, 102, 102, 0.55);
+		width: 1.4rem;
+		height: auto;
+	}
 `;
+
 const MiddleContainer = styled.div`
 	padding: 1rem;
 `;
-const Toggle = styled.div`
+
+const ToggleContainer = styled.div`
+	display: flex;
 	width: 100%;
-	height: 3rem;
-	background-color: #f2f2f2;
-	padding: 0.3rem;
-	margin: auto;
-	border-radius: 0.5rem;
-	display: flex;
-	align-items: center;
-	justify-content: center;
+	margin-bottom: 2.5rem;
+	margin-top: 0rem;
 `;
-const Item = styled.div`
-	display: flex;
+
+const Toggle = styled.div`
+	display: inline-flex;
 	align-items: center;
-	justify-content: center;
-	height: 100%;
-	flex: 1;
-	padding: 0.5rem;
-	border-radius: 0.6rem;
+	background-color: #f5f6fa;
+	border-radius: 22px;
+	outline: none;
+	color: rgba(#0a2e65, 0.9);
+	overflow: auto;
+	border: none;
+	font-family: $regular-font;
+	font-size: 0.75rem;
+	position: sticky;
+	top: 0;
+	z-index: 10;
+	padding: 6px 6px;
+`;
+
+const Item = styled.div`
+	cursor: pointer;
+	color: rgba(#0a2e65, 0.6);
+	background: transparent;
+	transition: opacity 500ms ease;
+	text-transform: uppercase;
+	opacity: 0.6;
+	padding: 10px 20px;
+	border-radius: 22px;
+	white-space: nowrap;
+	font-size: 0.75rem;
+	letter-spacing: 0.8px;
+	font-weight: 600;
+
 	&:hover {
-		cursor: pointer;
+		opacity: 1;
+	}
+
+	&.active {
+		opacity: 1;
+		background: #fff;
+		color: #434ce6;
 	}
 `;
 const BottomContainer = styled.div`
@@ -119,27 +154,29 @@ const InputModal = ({ handleModal, maintenance, setMaintenance }) => {
 	return (
 		<Container>
 			<TopContainer>
-				<HeaderText>Maintenance Input</HeaderText>
+				<HeaderText>Add Maintenance</HeaderText>
 				<CloseBtn onClick={handleModal}>
-					<FaRegTimesCircle />
+					<FiX />
 				</CloseBtn>
 			</TopContainer>
 
 			<MiddleContainer>
-				<Toggle>
-					<Item
-						className={`${active === 1 && 'active'}`}
-						onClick={(e) => handleActiveState(e, 1)}
-					>
-						Location
-					</Item>
-					<Item
-						className={`${active === 2 && 'active'}`}
-						onClick={(e) => handleActiveState(e, 2)}
-					>
-						System Type
-					</Item>
-				</Toggle>
+				<ToggleContainer>
+					<Toggle>
+						<Item
+							className={`${active === 1 && 'active'}`}
+							onClick={(e) => handleActiveState(e, 1)}
+						>
+							Location
+						</Item>
+						<Item
+							className={`${active === 2 && 'active'}`}
+							onClick={(e) => handleActiveState(e, 2)}
+						>
+							System Type
+						</Item>
+					</Toggle>
+				</ToggleContainer>
 
 				{active === 1 ? (
 					<>
@@ -234,7 +271,6 @@ const InputModal = ({ handleModal, maintenance, setMaintenance }) => {
 				<Button
 					disabled={loading ? true : false}
 					variant="solid"
-					color="red"
 					type="submit"
 					onClick={handleSubmit}
 				>

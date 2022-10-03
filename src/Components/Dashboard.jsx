@@ -59,7 +59,7 @@ const TopNumber = styled.h2`
 
 const Dashboard = () => {
 	const [maintenance, setMaintenance] = useState(TableData);
-	const [modal, setModal] = useState(false);
+	const [modal, setModal] = useState(true);
 
 	const handleModal = () => {
 		setModal(!modal);
